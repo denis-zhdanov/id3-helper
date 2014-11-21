@@ -34,6 +34,11 @@ public class FileInfoBuilderTest {
     doTest(Arrays.asList("01 - Artist - a.mp3", "02 - Artist - b.mp3", "03 - Artist - c.mp3"), Arrays.asList("a.mp3", "b.mp3", "c.mp3"));
   }
 
+  @Test
+  public void dots() {
+    doTest(Arrays.asList("01. Foreword.mp3", "02. Don't say.mp3"), Arrays.asList("Foreword.mp3", "Don't say.mp3"));
+  }
+
   private void doTest(List<String> initial, List<String> expected) {
     List<File> initialFiles = new ArrayList<File>();
     for (String s : initial) {

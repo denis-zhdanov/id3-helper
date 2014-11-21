@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class FileInfoBuilder {
 
-  private static final Pattern PREFIX = Pattern.compile("[\\d ]+\\-\\s*");
+  private static final Pattern PREFIX = Pattern.compile("[\\d ]+\\s*[\\-\\.]\\s*");
 
   public List<FileInfo> build(List<File> baseFiles) {
     List<TmpFileInfo> tmp = stripTrackNumbers(baseFiles);
