@@ -10,6 +10,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.id3.ID3v22Tag;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +42,11 @@ public class Id3Applier {
       FileInfo fileInfo = fileInfos.get(i);
       AudioFile audioFile = AudioFileIO.read(file);
       Tag tag = audioFile.getTag();
+      boolean setTag = false;
+      if (tag == null) {
+        setTag = true;
+        tag = new ID3v22Tag();
+      }
       tag.setField(FieldKey.TITLE, fileInfo.name);
       tag.setField(FieldKey.ALBUM, info.getAlbum());
       tag.setField(FieldKey.YEAR, String.valueOf(info.getYear()));
@@ -52,6 +58,9 @@ public class Id3Applier {
       tag.setField(FieldKey.TRACK, String.valueOf(i + 1));
       tag.setField(FieldKey.TRACK_TOTAL, String.valueOf(filesToProcess.size()));
       tag.setField(FieldKey.COMMENT, ""); // Reset comment
+      if (setTag) {
+        audioFile.setTag(tag);
+      }
       AudioFileIO.write(audioFile);
 
       String desiredFileName = fileInfo.getFileName();
