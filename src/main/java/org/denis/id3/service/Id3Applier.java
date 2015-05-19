@@ -7,9 +7,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.*;
 import org.jaudiotagger.tag.id3.ID3v22Tag;
 
 import java.io.File;
@@ -50,13 +48,19 @@ public class Id3Applier {
       tag.setField(FieldKey.TITLE, fileInfo.name);
       tag.setField(FieldKey.ALBUM, info.getAlbum());
       tag.setField(FieldKey.YEAR, String.valueOf(info.getYear()));
-      tag.setField(FieldKey.ALBUM_ARTIST, info.getComposer());
+      try {
+        tag.setField(FieldKey.ALBUM_ARTIST, info.getComposer());
+      } catch (Exception ignore) {
+      }
       tag.setField(FieldKey.ARTIST, info.getComposer());
       if (info.getGenre() != null) {
         tag.setField(FieldKey.GENRE, info.getGenre());
       }
       tag.setField(FieldKey.TRACK, String.valueOf(i + 1));
-      tag.setField(FieldKey.TRACK_TOTAL, String.valueOf(filesToProcess.size()));
+      try {
+        tag.setField(FieldKey.TRACK_TOTAL, String.valueOf(filesToProcess.size()));
+      } catch (Exception ignore) {
+      }
       tag.setField(FieldKey.COMMENT, ""); // Reset comment
       if (setTag) {
         audioFile.setTag(tag);

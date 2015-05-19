@@ -7,5 +7,6 @@ public class Id3EditorFrame extends JFrame {
 
   public Id3EditorFrame() throws HeadlessException {
     setContentPane(new Id3Panel());
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 }
