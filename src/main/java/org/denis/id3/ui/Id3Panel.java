@@ -26,7 +26,7 @@ public class Id3Panel extends JPanel {
   private final JTextField   albumField     = new JTextField(TEXT_FIELD_COLUMNS_NUMBER);
   private final JTextField   yearField      = new JTextField(TEXT_FIELD_COLUMNS_NUMBER);
   private final JComboBox    genreBox       = new JComboBox(new Object[]{
-    NONE, "Alternative", "Hip Hop/Rap", "Reggae", "Trance", "Русский рок"
+    NONE, "Alternative", "Funk", "Hip Hop/Rap", "Punk", "Reggae", "Synthpop", "Trance", "Русский рок"
   });
 
   public Id3Panel() {
