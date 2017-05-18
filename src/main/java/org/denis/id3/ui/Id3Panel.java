@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -26,8 +28,11 @@ public class Id3Panel extends JPanel {
   private final JTextField   albumField     = new JTextField(TEXT_FIELD_COLUMNS_NUMBER);
   private final JTextField   yearField      = new JTextField(TEXT_FIELD_COLUMNS_NUMBER);
   private final JComboBox    genreBox       = new JComboBox(new Object[]{
-    NONE, "Alternative", "Funk", "Hip Hop/Rap", "Punk", "Reggae", "Synthpop", "Trance", "Trip Hop", "Русский рок"
+    NONE, "Alternative", "Funk", "Hip Hop/Rap", "Punk", "Reggae", "Rock", "Synthpop", "Trance", "Trip Hop", "Русский рок"
   });
+  private static final Set<String> SUPPORTED_EXTENSIONS = new HashSet<String>(Arrays.asList(
+          "mp3", "m4a"
+  ));
 
   public Id3Panel() {
     setLayout(new MigLayout());
@@ -119,7 +124,12 @@ public class Id3Panel extends JPanel {
     File[] toProcess = targetDir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
-        return name.endsWith("mp3");
+        for (String extension : SUPPORTED_EXTENSIONS) {
+          if (name.endsWith(extension)) {
+            return true;
+          }
+        }
+        return false;
       }
     });
     if (toProcess == null || toProcess.length <= 0) {
